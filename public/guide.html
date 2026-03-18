@@ -149,6 +149,9 @@
     margin: 16px 0;
     color: #67e8f9;
     line-height: 1.6;
+    max-width: 100%;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   code {
@@ -210,7 +213,7 @@
   <h1>I Gave My AI a Home.<br><span class="gradient-text">Here's What Happened.</span></h1>
   <p>A first-hand account of setting up an autonomous AI agent using OpenClaw — what to do, what actually went wrong, and how to replicate it yourself.</p>
   <div class="meta">jelliebot.shop</div>
-  <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 1; animation: bounce 2s infinite; white-space: nowrap;">
+  <div style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; z-index: 1; animation: bounce 2s infinite;">
     <span style="font-size: 16px; color: #94a3b8; font-weight: 500; letter-spacing: 0.05em;">✨ scroll to read ✨</span>
     <span style="font-size: 22px;">🪼</span>
   </div>
@@ -234,33 +237,55 @@
 <p>OpenClaw is software you install on a server that gives an AI agent (like Claude) a persistent home — memory, tools, and a way for you to communicate with it. Without something like OpenClaw, every conversation with an AI starts from zero. It doesn't remember you. It can't run tasks in the background. It can't act on your behalf.</p>
 <p>OpenClaw changes that. The AI runs continuously, remembers context across sessions, and can be connected to real tools: GitHub, Stripe, Vercel, your calendar, your email. You control it from your phone via Telegram.</p>
 
-<h2>Step 1: Get a Server</h2>
-<p>You need a server that stays on 24/7. I used Hostinger — their cheapest VPS plan works fine.</p>
-<p><strong>What to get:</strong> Hostinger KVM 1 or KVM 2, Ubuntu 22.04 or 24.04. ~$5–7/month.</p>
-<p>After spinning it up:</p>
-<ol>
-  <li>SSH in: <code>ssh root@YOUR_SERVER_IP</code></li>
-  <li>Create a non-root user, set up SSH key authentication</li>
-  <li>Disable password auth in <code>/etc/ssh/sshd_config</code>: <code>PasswordAuthentication no</code></li>
-  <li>Restart SSH: <code>sudo systemctl restart sshd</code></li>
-</ol>
+<h2>A Note on Security</h2>
+<p>Before anything else: security isn't a step you do at the end. It's baked into how you set this up from the start. You're giving an AI agent access to real tools — GitHub, Stripe, your server. A few basic habits go a long way.</p>
+<p>The two most important things: don't run everything as root, and don't expose your server directly to the internet. The steps below handle both.</p>
+<blockquote>Security concepts here were informed by <a href="https://www.youtube.com/watch?v=tnsrnsy_Lus">Tech With Tim's OpenClaw setup video</a> — worth watching for a visual walkthrough.</blockquote>
 
-<h2>Step 2: Security First</h2>
+<h2>Step 1: Get a Server</h2>
+<p>You need a server that stays on 24/7. I used Hostinger — their cheapest VPS plan is plenty to start.</p>
+<p><strong>What to get:</strong> Hostinger KVM 1 or KVM 2, Ubuntu 22.04 or 24.04. ~$5–7/month.</p>
+
+<h3>First login</h3>
+<p>Hostinger will give you a root password and an IP address. SSH in from your terminal:</p>
+<pre>ssh root@YOUR_SERVER_IP</pre>
+
+<h3>Create a non-root user</h3>
+<p>By default you're logged in as <code>root</code> — the all-powerful admin account. Running everything as root is risky: one mistake (or one compromised command) can damage your entire server. Creating a separate user limits that blast radius.</p>
+<pre>adduser julie
+usermod -aG sudo julie</pre>
+<p>Replace <code>julie</code> with whatever username you want. The second command gives that user the ability to run admin commands when needed, without being root full-time.</p>
+
+<h3>Set up SSH key authentication</h3>
+<p>Instead of typing a password every time you log in, SSH keys use a cryptographic pair — a private key on your machine, a public key on the server. More secure, and no password to steal.</p>
+<p>On your <strong>local machine</strong> (not the server), generate a key if you don't have one:</p>
+<pre>ssh-keygen -t ed25519</pre>
+<p>Then copy it to the server:</p>
+<pre>ssh-copy-id julie@YOUR_SERVER_IP</pre>
+
+<h3>Disable password login</h3>
+<p>Once your SSH key is working, turn off password-based login entirely. Edit the SSH config on the server:</p>
+<pre>sudo nano /etc/ssh/sshd_config</pre>
+<p>Find and set:</p>
+<pre>PasswordAuthentication no</pre>
+<p>Save and restart SSH:</p>
+<pre>sudo systemctl restart sshd</pre>
+<p>From now on, log in as your new user: <code>ssh julie@YOUR_SERVER_IP</code></p>
+
+<h2>Step 2: Harden the Server</h2>
 <h3>Firewall</h3>
+<p>Block everything except SSH. You can open more ports later as needed.</p>
 <pre>sudo ufw allow OpenSSH
 sudo ufw enable</pre>
-<p>Only allow ports you actually need. Block everything else by default.</p>
 
 <h3>Tailscale</h3>
-<p>Tailscale creates a private encrypted tunnel between your devices. Instead of exposing your server to the public internet, you access it through a private address only you can reach. Your server becomes effectively invisible to everyone else.</p>
+<p>Tailscale creates a private encrypted tunnel between your devices. Instead of accessing your server over the public internet, you connect through a private address only your devices can see. Your server becomes effectively invisible to everyone else.</p>
 <pre>curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale up</pre>
-<p>Once connected, use your Tailscale IP to SSH instead of your public IP.</p>
+<p>Once it's running, Tailscale gives your server a private IP (looks like <code>100.x.x.x</code>). Use that to SSH from now on instead of the public IP.</p>
 
 <h3>Keep your system updated</h3>
 <pre>sudo apt update && sudo apt upgrade -y</pre>
-
-<blockquote>Security concepts in this section were informed by <a href="https://www.youtube.com/watch?v=tnsrnsy_Lus">Tech With Tim's OpenClaw setup video</a> — worth watching for a visual walkthrough.</blockquote>
 
 <h2>Step 3: Install OpenClaw</h2>
 <pre>curl -fsSL https://openclaw.ai/install.sh | sh</pre>
