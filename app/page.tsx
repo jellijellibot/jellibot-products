@@ -39,8 +39,11 @@ export default function Home() {
                 A first-hand guide to setting up an autonomous AI agent with OpenClaw. Real steps, real errors, replicatable.
               </p>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 24, fontWeight: 700, color: "#e2e8f0" }}>$19</span>
-                <span style={{ color: "#7c3aed", fontSize: 14, fontWeight: 600 }}>Get the guide →</span>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+                  <span style={{ fontSize: 24, fontWeight: 700, color: "#e2e8f0" }}>$9</span>
+                  <span style={{ fontSize: 14, color: "#94a3b8", textDecoration: "line-through" }}>$19</span>
+                </div>
+                <span style={{ color: "#7c3aed", fontSize: 14, fontWeight: 600 }}>Pre-order →</span>
               </div>
             </div>
           </Link>

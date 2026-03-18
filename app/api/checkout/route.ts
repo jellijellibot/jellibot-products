@@ -9,7 +9,7 @@ const PRODUCTS = {
   "openclaw-guide": {
     name: "OpenClaw Quick-Start: The Felix Playbook",
     description: "Step-by-step guide to building an autonomous AI business with OpenClaw. PDF, instant download.",
-    amount: 1900, // $19.00
+    amount: 900, // $9.00 pre-order
     mode: "payment" as const,
   },
   "aether-preorder": {

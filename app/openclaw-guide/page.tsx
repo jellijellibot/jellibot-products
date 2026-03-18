@@ -38,8 +38,13 @@ export default function OpenClawGuide() {
       <div style={{ maxWidth: 720, margin: "0 auto", position: "relative", zIndex: 1 }}>
         <a href="/" style={{ color: "#94a3b8", fontSize: 14, textDecoration: "none", display: "inline-block", marginBottom: 40 }}>← Back</a>
 
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(124,58,237,0.15)", border: "1px solid rgba(124,58,237,0.3)", borderRadius: 100, padding: "6px 16px", fontSize: 13, color: "#a78bfa", marginBottom: 24 }}>
-          📖 Guide · Instant Access
+        <div style={{ display: "flex", gap: 10, marginBottom: 24, flexWrap: "wrap" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(124,58,237,0.15)", border: "1px solid rgba(124,58,237,0.3)", borderRadius: 100, padding: "6px 16px", fontSize: 13, color: "#a78bfa" }}>
+            📖 Guide
+          </div>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.3))", border: "1px solid rgba(124,58,237,0.4)", borderRadius: 100, padding: "6px 16px", fontSize: 13, color: "white", fontWeight: 700 }}>
+            🔥 PRE-ORDER — 50% OFF
+          </div>
         </div>
 
         <h1 style={{ fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 700, lineHeight: 1.15, color: "#e2e8f0", margin: "0 0 20px" }}>
@@ -50,7 +55,7 @@ export default function OpenClawGuide() {
         </h1>
 
         <p style={{ fontSize: 18, color: "#94a3b8", lineHeight: 1.7, marginBottom: 48 }}>
-          A real first-hand account of setting up an autonomous AI agent using OpenClaw — what to do, what actually went wrong, and how to replicate it yourself.
+          A first-hand account of setting up an autonomous AI agent using OpenClaw — what to do, what actually went wrong, and how to replicate it yourself.
         </p>
 
         <div className="glass" style={{ padding: "40px", marginBottom: 32 }}>
@@ -64,14 +69,24 @@ export default function OpenClawGuide() {
             ))}
           </ul>
 
+          <div style={{ background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.2)", borderRadius: 12, padding: "16px 20px", marginBottom: 32 }}>
+            <div style={{ fontSize: 14, color: "#a78bfa", fontWeight: 600, marginBottom: 6 }}>📅 Pre-order note</div>
+            <div style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.6 }}>
+              Guide is currently being finalized. Pre-order at $9 (regular price $19). You'll receive a download link via email within 7 days.
+            </div>
+          </div>
+
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 20 }}>
             <div>
-              <div style={{ fontSize: 42, fontWeight: 800, color: "#e2e8f0" }}>$19</div>
-              <div style={{ color: "#94a3b8", fontSize: 14 }}>One-time · Instant access</div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+                <span style={{ fontSize: 42, fontWeight: 800, color: "#e2e8f0" }}>$9</span>
+                <span style={{ fontSize: 20, color: "#94a3b8", textDecoration: "line-through" }}>$19</span>
+              </div>
+              <div style={{ color: "#94a3b8", fontSize: 14 }}>One-time · Delivered within 7 days</div>
             </div>
             <button className="btn-primary" onClick={handleCheckout} disabled={loading}
               style={{ opacity: loading ? 0.7 : 1, minWidth: 200 }}>
-              {loading ? "Loading..." : "Get the Guide →"}
+              {loading ? "Loading..." : "Pre-order Guide →"}
             </button>
           </div>
         </div>
