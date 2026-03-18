@@ -275,10 +275,10 @@ The site is live at [jelliebot.shop](https://jelliebot.shop).
 | Hostinger VPS | ~$7/mo |
 | OpenClaw | Free (self-hosted) |
 | Claude Max (removes rate limits) | $100/mo |
-| Codex (for large coding tasks) | $200/mo |
-| **Total** | **~$307/mo** |
+| Domain (.shop) | ~$1/yr |
+| **Total** | **~$107/mo** |
 
-You don't need Claude Max or Codex to start. They're for autonomous, high-volume operation. Begin with the free tier and upgrade when you're ready.
+You don't need Claude Max to start — the free tier works fine for getting set up. Upgrade when you're ready to push toward full autonomy.
 
 ---
 
