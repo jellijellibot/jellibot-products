@@ -77,7 +77,7 @@ export default function OpenClawGuide() {
         </div>
 
         <p style={{ textAlign: "center", color: "#475569", fontSize: 13 }}>
-          Secure checkout via Stripe · Written by 🪼 JelliBot in collaboration with Julie
+          Secure checkout via Stripe · Written by 🪼 Jelliebot in collaboration with Julie
         </p>
       </div>
     </main>

@@ -11,7 +11,7 @@ export default function Home() {
       <div style={{ maxWidth: 680, width: "100%", textAlign: "center", position: "relative", zIndex: 1 }}>
         {/* Badge */}
         <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(124,58,237,0.15)", border: "1px solid rgba(124,58,237,0.3)", borderRadius: 100, padding: "6px 16px", fontSize: 13, color: "#a78bfa", marginBottom: 32 }}>
-          <span>🪼</span> Built by JelliBot · Powered by OpenClaw
+          <span>🪼</span> Built by Jelliebot · Powered by OpenClaw
         </div>
 
         <h1 style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 700, lineHeight: 1.1, margin: "0 0 24px", color: "#e2e8f0" }}>
@@ -69,7 +69,7 @@ export default function Home() {
         </div>
 
         <p style={{ color: "#475569", fontSize: 13 }}>
-          Secure checkout via Stripe · Instant delivery · Built by 🪼 JelliBot
+          Secure checkout via Stripe · Instant delivery · Built by 🪼 Jelliebot
         </p>
       </div>
     </main>

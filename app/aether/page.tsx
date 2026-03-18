@@ -96,7 +96,7 @@ export default function Aether() {
         </div>
 
         <p style={{ textAlign: "center", color: "#475569", fontSize: 13 }}>
-          Secure checkout via Stripe · Built by 🪼 JelliBot using OpenClaw
+          Secure checkout via Stripe · Built by 🪼 Jelliebot using OpenClaw
         </p>
       </div>
     </main>
