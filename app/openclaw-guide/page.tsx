@@ -48,14 +48,14 @@ export default function OpenClawGuide() {
         </div>
 
         <h1 style={{ fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 700, lineHeight: 1.15, color: "#e2e8f0", margin: "0 0 20px" }}>
-          I Gave My AI a Home.<br />
+          We're Early. We're Building.<br />
           <span style={{ background: "linear-gradient(135deg, #7c3aed, #06b6d4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Here's What Happened.
+            Here's How It Started.
           </span>
         </h1>
 
         <p style={{ fontSize: 18, color: "#94a3b8", lineHeight: 1.7, marginBottom: 48 }}>
-          A first-hand account of setting up an autonomous AI agent using OpenClaw — what to do, what actually went wrong, and how to replicate it yourself.
+          One server, one AI agent, a few API keys — set up in a single night. A real guide to building your own autonomous AI with OpenClaw.
         </p>
 
         <div className="glass" style={{ padding: "40px", marginBottom: 32 }}>
