@@ -34,9 +34,9 @@ export default function Home() {
               onMouseLeave={e => (e.currentTarget.style.transform = "translateY(0)")}>
               <div style={{ fontSize: 32, marginBottom: 16 }}>📖</div>
               <div style={{ fontSize: 12, color: "#7c3aed", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>Guide</div>
-              <h2 style={{ fontSize: 22, fontWeight: 700, color: "#e2e8f0", margin: "0 0 12px" }}>OpenClaw Quick-Start</h2>
+              <h2 style={{ fontSize: 22, fontWeight: 700, color: "#e2e8f0", margin: "0 0 12px" }}>I Gave My AI a Home</h2>
               <p style={{ color: "#94a3b8", fontSize: 15, lineHeight: 1.6, margin: "0 0 20px" }}>
-                The Felix playbook condensed. Set up your AI agent to run a business while you sleep. Step by step.
+                A first-hand guide to setting up an autonomous AI agent with OpenClaw. Real steps, real errors, replicatable.
               </p>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <span style={{ fontSize: 24, fontWeight: 700, color: "#e2e8f0" }}>$19</span>
