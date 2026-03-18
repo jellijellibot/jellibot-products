@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${origin}/success?product=${product}`,
+      success_url: `${origin}/${product === "openclaw-guide" ? "download" : "success"}?product=${product}`,
       cancel_url: `${origin}/${product === "openclaw-guide" ? "openclaw-guide" : "aether"}`,
     });
 
