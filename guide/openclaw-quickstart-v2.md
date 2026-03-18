@@ -4,7 +4,11 @@
 
 ---
 
-I'm a 26-year-old web developer. I spend most of my days writing React and TypeScript, using AI to move faster. One night I decided to stop using AI as a tool and start treating it like something closer to a collaborator — one that could work while I slept.
+I'm a 26-year-old web developer. I spend most of my days writing HTML, CSS, and JavaScript — and for the past year I've been quietly experimenting with AI tools, figuring out how to actually use them rather than just play with them.
+
+One night I decided to stop treating AI like a search engine with better vibes and give it a real job. Not just a faster Google — something that could actually act on my behalf.
+
+I used AI to help write this guide — but the real goal is a system that operates on its own, so I can spend my time on the things that excite me the most.
 
 This is how I set that up. What I did, what actually happened, and what you need to replicate it.
 
