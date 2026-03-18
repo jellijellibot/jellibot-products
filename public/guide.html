@@ -290,8 +290,28 @@ sudo tailscale up</pre>
 <p>Check it's running: <code>openclaw gateway status</code></p>
 <p>The dashboard runs at <code>http://127.0.0.1:18789</code> — only accessible locally, which is correct. Don't expose this publicly.</p>
 
-<h2>Step 4: Connect Telegram</h2>
-<p>Telegram is your command channel — how you talk to your agent from anywhere. OpenClaw treats it as an authenticated input, unlike email or Twitter which are read-only information sources.</p>
+<h2>Step 4: Connect a Channel</h2>
+<p>Your agent needs a way to receive messages from you. This is your command channel — the only place that can give it instructions. OpenClaw treats these as authenticated inputs, unlike email or social media which are read-only.</p>
+<p>OpenClaw supports Telegram, Discord, and others. Telegram is often recommended for mobile control, but I use Discord — it's where I already live, and it works great as a command channel.</p>
+
+<h3>Option A: Discord (what I use)</h3>
+<ol>
+  <li>Go to <a href="https://discord.com/developers/applications">discord.com/developers/applications</a></li>
+  <li>Click <strong>New Application</strong> — give it a name (e.g. Jelliebot)</li>
+  <li>Go to <strong>Bot</strong> in the left sidebar → click <strong>Add Bot</strong></li>
+  <li>Under <strong>Token</strong>, click <strong>Reset Token</strong> and copy it</li>
+  <li>Scroll down to <strong>Privileged Gateway Intents</strong> — enable <strong>Message Content Intent</strong></li>
+  <li>Go to <strong>OAuth2 → URL Generator</strong>, select <strong>bot</strong> scope, then <strong>Send Messages</strong> + <strong>Read Message History</strong> permissions</li>
+  <li>Copy the generated URL, open it in your browser, and invite the bot to your server</li>
+  <li>On your server:
+    <pre>openclaw channels add --channel discord --token "YOUR_BOT_TOKEN"
+openclaw gateway restart</pre>
+  </li>
+  <li>Send your bot a DM — it will ask for a pairing code. Enter it to authenticate your account.</li>
+</ol>
+<p>Once paired, only your account can issue commands. Messages from anyone else are ignored.</p>
+
+<h3>Option B: Telegram</h3>
 <ol>
   <li>Open Telegram → search <code>@BotFather</code></li>
   <li>Send <code>/newbot</code> — name it, username must end in <code>bot</code></li>
@@ -301,12 +321,11 @@ sudo tailscale up</pre>
 openclaw gateway restart</pre>
   </li>
   <li>Message your bot — enter the pairing code it gives you</li>
-  <li>Whitelist your user ID:
+  <li>Whitelist your Telegram user ID:
     <pre>openclaw config set channels.telegram.allowFrom '["YOUR_TELEGRAM_USER_ID"]'</pre>
     Find your ID by messaging <code>@userinfobot</code> on Telegram.
   </li>
 </ol>
-<p>Only your account can now issue commands. Everyone else gets nothing.</p>
 
 <h2>Step 5: Set Up Memory</h2>
 <p>Without a structured memory system, your agent will lose context between sessions. Here's the structure I use:</p>
