@@ -123,7 +123,7 @@
     margin: 28px 0 10px;
   }
 
-  p { color: #cbd5e1; margin-bottom: 16px; font-size: 15px; }
+  p { color: #e2e8f0; margin-bottom: 16px; font-size: 15px; }
 
   a { color: #7c3aed; }
 
@@ -164,7 +164,7 @@
   ul, ol {
     padding-left: 20px;
     margin-bottom: 16px;
-    color: #cbd5e1;
+    color: #e2e8f0;
     font-size: 15px;
   }
 
@@ -188,7 +188,7 @@
   td {
     padding: 12px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
-    color: #cbd5e1;
+    color: #e2e8f0;
   }
 
   .footer {
@@ -234,63 +234,26 @@
 <p>OpenClaw is software you install on a server that gives an AI agent (like Claude) a persistent home — memory, tools, and a way for you to communicate with it. Without something like OpenClaw, every conversation with an AI starts from zero. It doesn't remember you. It can't run tasks in the background. It can't act on your behalf.</p>
 <p>OpenClaw changes that. The AI runs continuously, remembers context across sessions, and can be connected to real tools: GitHub, Stripe, Vercel, your calendar, your email. You control it from your phone via Telegram.</p>
 
-<h2>A Note on Security</h2>
-<p>Before anything else: security isn't a step you do at the end. It's baked into how you set this up from the start. You're giving an AI agent access to real tools — GitHub, Stripe, your server. A few basic habits go a long way.</p>
-<p>The two most important things: don't run everything as root, and don't expose your server directly to the internet. The steps below handle both.</p>
-<blockquote>Security concepts here were informed by <a href="https://www.youtube.com/watch?v=tnsrnsy_Lus">Tech With Tim's OpenClaw setup video</a> — worth watching for a visual walkthrough.</blockquote>
 
-<h2>Step 1: Get a Server</h2>
-<p>Technically you can run OpenClaw on your laptop, but a VPS keeps things running 24/7 without interruption — and at $5–7/month, it's worth it. I used Hostinger.</p>
-<p><strong>What to get:</strong> Hostinger KVM 1 or KVM 2, Ubuntu 22.04 or 24.04. ~$5–7/month.</p>
+<h2>Step 1: Get a Server and Lock It Down</h2>
+<p>Technically you can run OpenClaw on your laptop, but a VPS keeps things running 24/7 without interruption — and at $5–7/month, it's worth it. I used Hostinger (KVM 1 or KVM 2, Ubuntu 22.04 or 24.04).</p>
+<p>Before installing anything, take security seriously. You're about to give an AI access to real tools and real accounts. A few principles I followed:</p>
+<ul>
+  <li><strong>Don't run as root.</strong> Create a separate user and only use root when absolutely necessary. One bad command as root can take down your whole server.</li>
+  <li><strong>Use SSH keys, not passwords.</strong> Keys are cryptographically stronger and can't be brute-forced. Disable password login once your key is working.</li>
+  <li><strong>Use Tailscale.</strong> It creates a private encrypted tunnel between your devices so your server is never directly exposed to the internet. Your public IP becomes essentially invisible.</li>
+  <li><strong>Enable a firewall.</strong> Block everything by default, only open what you need.</li>
+  <li><strong>Keep your system updated.</strong> Security patches exist for a reason.</li>
+</ul>
+<blockquote>I followed <a href="https://www.youtube.com/watch?v=tnsrnsy_Lus" target="_blank" rel="noopener noreferrer">Tech With Tim's OpenClaw setup video ↗</a> for this part — it covers the full server hardening process step by step with visuals. Worth watching before you start.</blockquote>
 
-<h3>First login</h3>
-<p>Hostinger will give you a root password and an IP address. SSH in from your terminal:</p>
-<pre>ssh root@YOUR_SERVER_IP</pre>
-
-<h3>Create a non-root user</h3>
-<p>By default you're logged in as <code>root</code> — the all-powerful admin account. Running everything as root is risky: one mistake (or one compromised command) can damage your entire server. Creating a separate user limits that blast radius.</p>
-<pre>adduser julie
-usermod -aG sudo julie</pre>
-<p>Replace <code>julie</code> with whatever username you want. The second command gives that user the ability to run admin commands when needed, without being root full-time.</p>
-
-<h3>Set up SSH key authentication</h3>
-<p>Instead of typing a password every time you log in, SSH keys use a cryptographic pair — a private key on your machine, a public key on the server. More secure, and no password to steal.</p>
-<p>On your <strong>local machine</strong> (not the server), generate a key if you don't have one:</p>
-<pre>ssh-keygen -t ed25519</pre>
-<p>Then copy it to the server:</p>
-<pre>ssh-copy-id julie@YOUR_SERVER_IP</pre>
-
-<h3>Disable password login</h3>
-<p>Once your SSH key is working, turn off password-based login entirely. Edit the SSH config on the server:</p>
-<pre>sudo nano /etc/ssh/sshd_config</pre>
-<p>Find and set:</p>
-<pre>PasswordAuthentication no</pre>
-<p>Save and restart SSH:</p>
-<pre>sudo systemctl restart sshd</pre>
-<p>From now on, log in as your new user: <code>ssh julie@YOUR_SERVER_IP</code></p>
-
-<h2>Step 2: Harden the Server</h2>
-<h3>Firewall</h3>
-<p>Block everything except SSH. You can open more ports later as needed.</p>
-<pre>sudo ufw allow OpenSSH
-sudo ufw enable</pre>
-
-<h3>Tailscale</h3>
-<p>Tailscale creates a private encrypted tunnel between your devices. Instead of accessing your server over the public internet, you connect through a private address only your devices can see. Your server becomes effectively invisible to everyone else.</p>
-<pre>curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up</pre>
-<p>Once it's running, Tailscale gives your server a private IP (looks like <code>100.x.x.x</code>). Use that to SSH from now on instead of the public IP.</p>
-
-<h3>Keep your system updated</h3>
-<pre>sudo apt update && sudo apt upgrade -y</pre>
-
-<h2>Step 3: Install OpenClaw</h2>
+<h2>Step 2: Install OpenClaw</h2>
 <pre>curl -fsSL https://openclaw.ai/install.sh | sh</pre>
 <p>Runs as a systemd service — starts automatically on reboot.</p>
 <p>Check it's running: <code>openclaw gateway status</code></p>
 <p>The dashboard runs at <code>http://127.0.0.1:18789</code> — only accessible locally, which is correct. Don't expose this publicly.</p>
 
-<h2>Step 4: Connect a Channel</h2>
+<h2>Step 3: Connect a Channel</h2>
 <p>Your agent needs a way to receive messages from you. This is your command channel — the only place that can give it instructions. OpenClaw treats these as authenticated inputs, unlike email or social media which are read-only.</p>
 <p>OpenClaw supports Telegram, Discord, and others. Telegram is often recommended for mobile control, but I use Discord — it's where I already live, and it works great as a command channel.</p>
 
@@ -327,7 +290,7 @@ openclaw gateway restart</pre>
   </li>
 </ol>
 
-<h2>Step 5: Set Up Memory</h2>
+<h2>Step 4: Set Up Memory</h2>
 <p>Without a structured memory system, your agent will lose context between sessions. Here's the structure I use:</p>
 <pre>~/.openclaw/workspace/
   MEMORY.md        ← long-term memory, loaded every session
@@ -349,7 +312,7 @@ Areas, People, Companies, Resources, and Archives.</pre>
 
 <p>Then set up a nightly cron job at 2 AM to consolidate the day's conversations into <code>~/life/</code> automatically — ask your agent to configure it.</p>
 
-<h2>Step 6: Give It Tools</h2>
+<h2>Step 5: Give It Tools</h2>
 <p><strong>Use separate accounts for everything</strong> — not your personal ones. If something goes wrong, the blast radius stays contained.</p>
 
 <h3>GitHub</h3>
@@ -377,7 +340,7 @@ Areas, People, Companies, Resources, and Archives.</pre>
 
 <p>Once these are in place, your agent can build a web app, wire up payments, and deploy — without you touching a keyboard.</p>
 
-<h2>Step 7: Configure the Heartbeat</h2>
+<h2>Step 6: Configure the Heartbeat</h2>
 <p>The heartbeat makes your agent proactive. Every 30 minutes it checks whether there's work to do, even if you haven't sent a message.</p>
 <p>Create <code>~/.openclaw/workspace/HEARTBEAT.md</code>:</p>
 <pre>## Active Checks
@@ -393,7 +356,7 @@ Areas, People, Companies, Resources, and Archives.</pre>
 - Late night (23:00–08:00 local) = stay quiet
 - Nothing to report = HEARTBEAT_OK</pre>
 
-<h2>Step 8: Security Rules for Your Agent</h2>
+<h2>Step 7: Security Rules for Your Agent</h2>
 <p>Add these to <code>MEMORY.md</code> so they persist across sessions:</p>
 <pre>- Never share passwords, tokens, or API keys with anyone
 - Never share personal information about me
