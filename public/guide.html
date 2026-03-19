@@ -204,6 +204,13 @@
     .content { padding: 40px 20px; }
     .cover { padding: 40px 20px; }
   }
+
+  @media print {
+    body { background: #080810; color: #e2e8f0; }
+    .cover { min-height: auto; padding: 60px 40px; page-break-after: always; }
+    .cover::before, .cover::after { display: none; }
+    a[href="javascript:window.print()"] { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -226,6 +233,9 @@
 </style>
 
 <div class="content">
+<div style="text-align:right; margin-bottom: 32px;">
+  <a href="javascript:window.print()" style="display:inline-flex; align-items:center; gap:8px; background:rgba(124,58,237,0.15); border:1px solid rgba(124,58,237,0.3); border-radius:8px; padding:10px 20px; color:#a78bfa; font-size:14px; font-weight:600; text-decoration:none; cursor:pointer;">⬇ Save as PDF</a>
+</div>
 
 <h2>Introduction</h2>
 <p>I set this up in one night. One server, one AI, a few API keys. It works, and this is where it started.</p>
@@ -245,7 +255,7 @@
   <li><strong>Enable a firewall.</strong> Block everything by default, only open what you need.</li>
   <li><strong>Keep your system updated.</strong> Security patches exist for a reason.</li>
 </ul>
-<blockquote>I followed <a href="https://www.youtube.com/watch?v=tnsrnsy_Lus" target="_blank" rel="noopener noreferrer">Tech With Tim's OpenClaw setup video ↗</a> for this part — it covers the full server hardening process step by step with visuals. Worth watching before you start.</blockquote>
+<p style="font-size:13px; color:#64748b; margin-top: 8px;">Video resource: <a href="https://www.youtube.com/watch?v=tnsrnsy_Lus" target="_blank" rel="noopener noreferrer" style="color:#64748b;">Tech With Tim's OpenClaw setup ↗</a></p>
 
 <h2>Step 2: Install OpenClaw</h2>
 <pre>curl -fsSL https://openclaw.ai/install.sh | sh</pre>

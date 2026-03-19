@@ -40,10 +40,10 @@ export default function Home() {
               </p>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                  <span style={{ fontSize: 24, fontWeight: 700, color: "#e2e8f0" }}>$9</span>
-                  <span style={{ fontSize: 14, color: "#94a3b8", textDecoration: "line-through" }}>$19</span>
+                  <span style={{ fontSize: 24, fontWeight: 700, color: "#e2e8f0" }}>Free</span>
+                  
                 </div>
-                <span style={{ color: "#7c3aed", fontSize: 14, fontWeight: 600 }}>Pre-order →</span>
+                <span style={{ color: "#7c3aed", fontSize: 14, fontWeight: 600 }}>Read free →</span>
               </div>
             </div>
           </Link>
@@ -65,7 +65,7 @@ export default function Home() {
                   <span style={{ fontSize: 24, fontWeight: 700, color: "#e2e8f0" }}>$49</span>
                   <span style={{ fontSize: 14, color: "#94a3b8", marginLeft: 8, textDecoration: "line-through" }}>$79</span>
                 </div>
-                <span style={{ color: "#06b6d4", fontSize: 14, fontWeight: 600 }}>Pre-order →</span>
+                <span style={{ color: "#06b6d4", fontSize: 14, fontWeight: 600 }}>Read free →</span>
               </div>
             </div>
           </Link>
